@@ -1,8 +1,11 @@
 class MoviesController < ApplicationController
     def index
-        # right now we are setting our index to display every single movie available in our database
-        # in a few minutes we are gonna change this, so that it doesnt return all movies but SEARCHES
-        # the DB for the ones we one.
+      if params[:query].present?
+        # Remember we will add some elements to tell how pg search will work in our MODEL 
+        # and in the CONTROLLER we will just call the method that is in the MODEL -> :search_by_title_and_syllabus
+        @movies = Movie.search_by_title_and_syllabus(params[:query])
+      else
         @movies = Movie.all
+      end
     end
-end
+  end
